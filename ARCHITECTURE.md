@@ -393,3 +393,6 @@ Scenario: renewal payment was in flight; user canceled; `payment.captured` arriv
 | 2026-07-04 | Upgrade: immediate proration; downgrade: period end | Fair revenue on upgrades; prevents downgrade-and-refund gaming |
 | 2026-07-04 | Cancel retains access until period end | Matches Prime/SaaS convention and paid-time contract |
 | 2026-07-04 | Late capture on canceled sub triggers refund, not re-activation | Honors cancel intent; corrects stray charges |
+| 2026-07-04 | Zod schemas live in `@registerkaro/shared`; API uses `validateBody/Query/Params`, web uses `zodResolver` | One validation source, two enforcement points |
+| 2026-07-04 | Plan uniqueness enforced via partial unique index on `(planGroup, billingInterval)` where `isActive: true` | Inactive catalog rows can coexist; active duplicates rejected |
+| 2026-07-04 | Partial unique “one active sub per user per planGroup” deferred to checkout implementation | ARCHITECTURE notes optional rule; scaffold ships core indexes only |

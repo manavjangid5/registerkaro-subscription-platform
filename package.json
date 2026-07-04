@@ -1,13 +1,24 @@
 {
   "name": "registerkaro-subscription-platform",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "description": "Production-grade subscription billing platform",
+  "packageManager": "pnpm@10.34.4",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "pnpm --filter @registerkaro/shared build && pnpm -r --parallel dev",
+    "dev:web": "pnpm --filter @registerkaro/web dev",
+    "dev:api": "pnpm --filter @registerkaro/api dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "pnpm -r typecheck"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "packageManager": "pnpm@10.34.4"
+  "devDependencies": {
+    "@registerkaro/eslint-config": "workspace:*",
+    "eslint": "^9.28.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.12",
+    "typescript": "^5.8.3"
+  }
 }
