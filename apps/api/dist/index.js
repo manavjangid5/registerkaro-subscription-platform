@@ -5,6 +5,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import { loadEnv } from './config/env.js';
 import './models/index.js';
+import authRoutes from './routes/auth.routes.js';
 const env = loadEnv();
 const app = express();
 app.use(cors());
@@ -16,6 +17,7 @@ app.get('/health', (_req, res) => {
     });
     res.json(payload);
 });
+app.use('/auth', authRoutes);
 async function start() {
     await mongoose.connect(env.MONGODB_URI);
     app.listen(env.PORT, () => {
