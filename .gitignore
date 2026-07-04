@@ -1,9 +1,13 @@
 node_modules/
-   .env
-   .env.local
-   dist/
-   .next/
-   *.log
-   .DS_Store
-
+**/node_modules/
+.env
+**/.env
+.env.local
+**/.env.local
+dist/
+**/dist/
+.next/
+**/.next/
+*.log
+.DS_Store
 .cursor/
