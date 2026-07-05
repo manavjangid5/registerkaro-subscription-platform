@@ -2,7 +2,7 @@
 
 import type { SubscriptionResponse } from '@registerkaro/shared';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { apiRequest } from '@/lib/api-client';
 import { useAuth } from '@/lib/auth-context';
@@ -10,7 +10,7 @@ import { useAuth } from '@/lib/auth-context';
 const POLL_INTERVAL_MS = 2000;
 const MAX_POLLS = 10; // ~20 seconds total
 
-export default function ConfirmingPaymentPage() {
+function ConfirmingPaymentContent() {
   const { accessToken } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -41,8 +41,6 @@ export default function ConfirmingPaymentPage() {
               return;
             }
           }
-          // Any other status for this subscription (or it disappearing)
-          // during initial checkout implies the payment did not succeed.
           setStatus('failed');
         })
         .catch(() => setPollCount((c) => c + 1));
@@ -91,5 +89,19 @@ export default function ConfirmingPaymentPage() {
         </>
       )}
     </main>
+  );
+}
+
+export default function ConfirmingPaymentPage() {
+  return (
+    <Suspense
+      fallback={
+        <main className="mx-auto flex min-h-screen max-w-md flex-col items-center justify-center px-6 text-center">
+          <p className="text-zinc-500">Loading…</p>
+        </main>
+      }
+    >
+      <ConfirmingPaymentContent />
+    </Suspense>
   );
 }

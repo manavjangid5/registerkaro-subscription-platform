@@ -37,9 +37,9 @@ export async function apiRequest<T>(path: string, options: RequestOptions = {}):
 
   if (!res.ok) {
     const message =
-      typeof data === 'object' && data !== null && 'error' in data
-        ? String((data as { error: unknown }).error)
-        : 'Request failed';
+    typeof data === 'object' && data !== null && 'error' in data
+    ? String(data.error)
+    : 'Request failed';
     throw new ApiError(res.status, message, data);
   }
 
