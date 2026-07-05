@@ -200,9 +200,9 @@ export default function SubscriptionsPage() {
 
         {subscription.scheduledPlanSnapshot && (
           <p className="mt-2 text-sm text-amber-700">
-            Switching to {subscription.scheduledPlanSnapshot.name} (
-            {subscription.scheduledPlanSnapshot.billingInterval}) on{' '}
-            {formatDate(subscription.currentPeriodEnd)}.
+            {subscription.scheduledPlanSnapshot.priceInPaise > subscription.planSnapshot.priceInPaise
+              ? `Upgrade to ${subscription.scheduledPlanSnapshot.name} (${subscription.scheduledPlanSnapshot.billingInterval}) is pending payment confirmation.`
+              : `Switching to ${subscription.scheduledPlanSnapshot.name} (${subscription.scheduledPlanSnapshot.billingInterval}) on ${formatDate(subscription.currentPeriodEnd)}.`}
           </p>
         )}
 
