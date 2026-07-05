@@ -1,6 +1,6 @@
 # RegisterKaro Subscription Billing Platform
 
-A subscription billing platform for a generic SaaS tool — plan discovery, checkout, payments, webhooks, subscription lifecycle management (upgrade/downgrade/cancel), invoicing, and notifications.
+A subscription billing platform for a generic SaaS tool — plan discovery, checkout, payments, webhooks, subscription lifecycle management (upgrade/downgrade/cancel), invoicing, and notifications. **[Video Walkthrough](https://drive.google.com/file/d/10t_K2Kw826WNnUdrSVGX9YtLAPrlkfxN/view?usp=sharing)**
 
 Built as a take-home assignment. See **[ARCHITECTURE.md](https://github.com/manavjangid5/registerkaro-subscription-platform/blob/main/ARCHITECTURE.md)** for the data model, state machines, and the reasoning behind every flow decision — that document is the primary deliverable.
 
