@@ -2,7 +2,7 @@
 
 A subscription billing platform for a generic SaaS tool — plan discovery, checkout, payments, webhooks, subscription lifecycle management (upgrade/downgrade/cancel), invoicing, and notifications.
 
-Built as a take-home assignment. See **[ARCHITECTURE.md](https://claude.ai/chat/ARCHITECTURE.md)** for the data model, state machines, and the reasoning behind every flow decision — that document is the primary deliverable.
+Built as a take-home assignment. See **[ARCHITECTURE.md](https://github.com/manavjangid5/registerkaro-subscription-platform/blob/main/ARCHITECTURE.md)** for the data model, state machines, and the reasoning behind every flow decision — that document is the primary deliverable.
 
 ## Tech stack
 
@@ -139,4 +139,4 @@ packages/
 
 ## Known limitations
 
-See the "Key Decisions & Trade-offs" section in [ARCHITECTURE.md](https://claude.ai/chat/ARCHITECTURE.md) for a full list, including: notifications are logged but not actually emailed, refresh tokens are stored in `localStorage` rather than an httpOnly cookie, and the cron-based renewal/expiry sweep is a simplified stand-in for a durable job queue.
+See the "Key Decisions & Trade-offs" section in [ARCHITECTURE.md](https://github.com/manavjangid5/registerkaro-subscription-platform/blob/main/ARCHITECTURE.md) for a full list, including: notifications are logged but not actually emailed, refresh tokens are stored in `localStorage` rather than an httpOnly cookie, and the cron-based renewal/expiry sweep is a simplified stand-in for a durable job queue.
