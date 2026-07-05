@@ -8,6 +8,9 @@ import mongoose from 'mongoose';
 import { loadEnv } from './config/env.js';
 import './models/index.js';
 import authRoutes from './routes/auth.routes.js';
+import checkoutRoutes from './routes/checkout.routes.js';
+import plansRoutes from './routes/plans.routes.js';
+import subscriptionsRoutes from './routes/subscriptions.routes.js';
 
 const env = loadEnv();
 const app = express();
@@ -24,6 +27,9 @@ app.get('/health', (_req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/plans', plansRoutes);
+app.use('/checkout', checkoutRoutes);
+app.use('/subscriptions', subscriptionsRoutes);
 
 async function start(): Promise<void> {
   await mongoose.connect(env.MONGODB_URI);
