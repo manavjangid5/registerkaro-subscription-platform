@@ -198,7 +198,7 @@ async function handlePaymentCaptured(
         periodStart,
         periodEnd,
         status: 'paid',
-        invoiceNumber: generateInvoiceNumber(subscription._id.toString(), periodStart),
+        invoiceNumber: generateInvoiceNumber(payment._id.toString(), periodStart),
         issuedAt: new Date(),
         paidAt: new Date(),
       });
@@ -246,7 +246,7 @@ async function handlePaymentCaptured(
         periodStart,
         periodEnd,
         status: 'paid',
-        invoiceNumber: generateInvoiceNumber(subscription._id.toString(), periodStart),
+        invoiceNumber: generateInvoiceNumber(payment._id.toString(), periodStart),
         issuedAt: new Date(),
         paidAt: new Date(),
       });

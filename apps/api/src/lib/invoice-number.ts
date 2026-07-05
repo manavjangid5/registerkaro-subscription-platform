@@ -1,5 +1,5 @@
-export function generateInvoiceNumber(subscriptionId: string, periodStart: Date): string {
-    const datePart = periodStart.toISOString().slice(0, 10).replace(/-/g, '');
-    const shortSubId = subscriptionId.slice(-6);
-    return `INV-${datePart}-${shortSubId}`;
-  }
+export function generateInvoiceNumber(paymentId: string, periodStart: Date): string {
+  const datePart = periodStart.toISOString().slice(0, 10).replace(/-/g, '');
+  const shortPaymentId = paymentId.slice(-8);
+  return `INV-${datePart}-${shortPaymentId}`;
+}
