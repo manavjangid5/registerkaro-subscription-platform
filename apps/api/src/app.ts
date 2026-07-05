@@ -36,5 +36,14 @@ export function createApp(): Express {
   app.use('/checkout', checkoutRoutes);
   app.use('/subscriptions', subscriptionsRoutes);
 
+  // Catches anything not explicitly handled in a route — converts it to a
+  // clean JSON error instead of Express's default HTML error page.
+  app.use((err: unknown, _req: express.Request, res: express.Response, _next: express.NextFunction) => {
+    console.error('Unhandled error:', err);
+    res.status(500).json({
+      error: err instanceof Error ? err.message : 'Internal server error',
+    });
+  });
+
   return app;
 }

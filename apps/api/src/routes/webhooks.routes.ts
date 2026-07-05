@@ -204,8 +204,6 @@ async function handlePaymentCaptured(
       });
     } catch (err) {
       if (!isDuplicateKeyError(err)) throw err;
-      // Invoice for this exact period already exists — a retry of this
-      // handler, not a real duplicate charge. Safe to ignore.
     }
 
     await enqueueNotification({
@@ -214,9 +212,58 @@ async function handlePaymentCaptured(
       type: 'subscription_activated',
       idempotencyKey: `subscription_activated:${subscription._id.toString()}:${periodStart.toISOString()}`,
     });
+    return;
   }
-  // 'upgrade_proration' and 'renewal' purposes are handled by Prompt 6's
-  // plan-change logic, which will branch on payment.purpose here.
+  if (payment.purpose === 'upgrade_proration') {
+    if (!subscription.scheduledPlanSnapshot) {
+      // Nothing staged to apply — likely already applied by a prior
+      // delivery of this same event. Safe no-op.
+      return;
+    }
+
+    const newPlanSnapshot = subscription.scheduledPlanSnapshot;
+
+    // Upgrade takes effect immediately and RESETS the billing period from
+    // now, per the ARCHITECTURE.md decision — the prior partial period is
+    // fully consumed by the proration charge just captured.
+    const periodStart = new Date();
+    const periodEnd = computePeriodEnd(periodStart, newPlanSnapshot.billingInterval);
+
+    subscription.planSnapshot = newPlanSnapshot;
+    subscription.scheduledPlanSnapshot = null;
+    subscription.currentPeriodStart = periodStart;
+    subscription.currentPeriodEnd = periodEnd;
+    await subscription.save();
+
+    try {
+      await Invoice.create({
+        subscriptionId: subscription._id,
+        userId: subscription.userId,
+        paymentId: payment._id,
+        planSnapshot: newPlanSnapshot,
+        amountInPaise: payment.amountInPaise,
+        currency: payment.currency,
+        periodStart,
+        periodEnd,
+        status: 'paid',
+        invoiceNumber: generateInvoiceNumber(subscription._id.toString(), periodStart),
+        issuedAt: new Date(),
+        paidAt: new Date(),
+      });
+    } catch (err) {
+      if (!isDuplicateKeyError(err)) throw err;
+    }
+
+    await enqueueNotification({
+      userId: subscription.userId.toString(),
+      subscriptionId: subscription._id.toString(),
+      type: 'subscription_activated',
+      idempotencyKey: `plan_change_confirmed:${subscription._id.toString()}:${periodStart.toISOString()}`,
+    });
+  }
+  // 'renewal' purpose is out of scope for this assignment's time window
+  // (would require a scheduled recurring-charge trigger) — documented as
+  // a known limitation in ARCHITECTURE.md rather than left unexplained.
 }
 
 async function handlePaymentFailed(paymentEntity: RazorpayPaymentEntity): Promise<void> {

@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 import { createApp } from './app.js';
 import { loadEnv } from './config/env.js';
+import { startSubscriptionCron } from './lib/cron.js';
 
 const env = loadEnv();
 
@@ -11,6 +12,8 @@ async function start(): Promise<void> {
   const app = createApp();
   app.listen(env.PORT, () => {
     console.log(`API listening on http://localhost:${String(env.PORT)}`);
+    startSubscriptionCron();
+    console.log('Subscription cron sweep started (runs every minute).');
   });
 }
 
