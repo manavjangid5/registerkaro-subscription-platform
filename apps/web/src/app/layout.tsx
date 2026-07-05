@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Script from 'next/script';
 
 import { AuthProvider } from '@/lib/auth-context';
 
@@ -13,6 +14,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body className="antialiased">
+        <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="beforeInteractive" />
         <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
