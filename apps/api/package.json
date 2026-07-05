@@ -10,7 +10,8 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint src/",
     "seed:plans": "tsx src/scripts/seed-plans.ts",
-    "simulate:webhook": "tsx src/scripts/simulate-webhook.ts"
+    "simulate:webhook": "tsx src/scripts/simulate-webhook.ts",
+    "test": "vitest run"
   },
   "dependencies": {
     "@registerkaro/shared": "workspace:*",
@@ -32,6 +33,7 @@
     "@types/node": "^22.15.29",
     "eslint": "^9.28.0",
     "tsx": "^4.19.4",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "vitest": "^4.1.9"
   }
 }

@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@registerkaro/eslint-config": "workspace:*",
+    "@rolldown/binding-win32-x64-msvc": "^1.1.4",
     "eslint": "^9.28.0",
     "prettier": "^3.5.3",
     "prettier-plugin-tailwindcss": "^0.6.12",
